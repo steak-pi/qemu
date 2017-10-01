@@ -27,8 +27,8 @@
 IMG=$1
 KERNEL=kernel-qemu-4.4.34-jessie
 
-NO_NETWORK=1            # set to 1 to skip network configuration
-IFACE=enp3s0            # interface that we currently use for internet
+NO_NETWORK=0            # set to 1 to skip network configuration
+IFACE=eth1            # interface that we currently use for internet
 BRIDGE=br0              # name for the bridge we will create to share network with the raspbian img
 MAC='52:54:be:36:42:a9' # comment this line for random MAC (maybe annoying if on DHCP)
 BINARY_PATH=/usr/bin    # path prefix for binaries
@@ -107,8 +107,8 @@ EOF
 }
 
 # prepare the image
-SECTOR1=$( fdisk -l $IMG | grep FAT32 | awk '{ print $2 }' )
-SECTOR2=$( fdisk -l $IMG | grep Linux | awk '{ print $2 }' )
+SECTOR1=$( /sbin/fdisk -l $IMG | grep FAT32 | awk '{ print $2 }' )
+SECTOR2=$( /sbin/fdisk -l $IMG | grep Linux | awk '{ print $2 }' )
 OFFSET1=$(( SECTOR1 * 512 ))
 OFFSET2=$(( SECTOR2 * 512 ))
 
